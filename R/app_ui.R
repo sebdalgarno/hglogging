@@ -4,11 +4,10 @@ app_ui <- function() {
     # Leave this function for adding external resources
     # from inst/app/www
     golem_add_external_resources(),
-    golem::js(),
-    golem::favicon(),
     # List the first level UI elements here 
     fluidPage(
-      h1("hglogging")
+      mod_about_ui("about_ui_1"),
+      mod_map_ui("map_ui_1")
     )
   )
 }
