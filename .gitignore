@@ -6,3 +6,8 @@
 .DS_Store
 
 *extdata
+*.geojson
+*.json
+*.csv
+*.rds
+*.rda
