@@ -7,10 +7,11 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    shiny, 
-    golem
+    shiny,
+    golem,
+    r2d3
 Remotes: 
     Thinkr-open/golem
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: 
     testthat
