@@ -9,7 +9,8 @@ LazyData: true
 Imports: 
     shiny,
     golem,
-    r2d3
+    r2d3,
+    chroma
 Remotes: 
     Thinkr-open/golem
 RoxygenNote: 6.1.1

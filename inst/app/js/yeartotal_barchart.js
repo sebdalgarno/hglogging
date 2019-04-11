@@ -5,9 +5,9 @@ var scaleFactor = 10;
 var padding = 40;
 var smallpad = 0;
 
-var parseTime = d3.timeParse("%Y");
+var palette = d3.quantize(d3.interpolateHcl("#fafa6e", "#2A4858"), data.length);
 
-var color = d3.scale.category20c();
+var parseTime = d3.timeParse("%Y");
 
 var x = d3.scaleBand()
 .domain(data.map(function (d) {
@@ -36,9 +36,7 @@ rect.enter().append("rect")
 .attr("height", function(d){
   return (height - y(d.Total)) - padding;
 })
-.attr("fill", function(d){
-  return d.Colour;
-});
+.style("fill", function(d, i) { return palette[i]});
 
 rect.transition();
 
