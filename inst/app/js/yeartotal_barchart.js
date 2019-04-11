@@ -1,4 +1,4 @@
-// !preview r2d3 data = data.frame(Year = c(1901, 1950, 1989, 2010), Colour = c("#E35E00", "#E36200", "#E56E00", "#E56E00"), Total = c(84.6, 96.2, 203, 20))
+// !preview r2d3 data = data.frame(Year = as.Date(c("1901-01-01", "1952-01-01", "1989-01-01", "2010-01-01")), Colour = c("#E35E00", "#E36200", "#E56E00", "#E56E00"), Total = c(84.6, 96.2, 203, 20))
 
 var barPadding = 0.05;
 var scaleFactor = 10;
@@ -7,7 +7,7 @@ var smallpad = 0;
 
 var palette = d3.quantize(d3.interpolateHcl("#fafa6e", "#2A4858"), data.length);
 
-var parseTime = d3.timeParse("%Y");
+var parseTime = d3.timeParse("%Y-%m-%d");
 
 var x = d3.scaleBand()
 .domain(data.map(function (d) {
@@ -22,10 +22,10 @@ var y = d3.scaleLinear()
 })])
 .rangeRound([height - padding, padding]);
 
-var rect = svg.selectAll("rect")
-.data(data);
+var bars= r2d3.svg.selectAll("rect")
+.data(r2d3.data);
 
-rect.enter().append("rect")
+bars.enter().append("rect")
 .attr("x", function(d) {
   return x(parseTime(d.Year));
 })
@@ -37,8 +37,6 @@ rect.enter().append("rect")
   return (height - y(d.Total)) - padding;
 })
 .style("fill", function(d, i) { return palette[i]});
-
-rect.transition();
 
 var xAxis = d3.axisBottom()
 .scale(x)
@@ -56,3 +54,9 @@ svg.append("g")
 .attr("class", "axis")
 .attr("transform", "translate(" + (padding - smallpad) + ",0)")
 .call(yAxis);
+
+bars.exit().remove();
+
+bars.transition()
+  .duration(100)
+  .attr("width", function(d) { return d * width; });

@@ -2,6 +2,8 @@
 app_ui <- function() {
   tagList(
     shinyjs::useShinyjs(),
+    # shinyCustom::useShinyCustom(slider_delay = "0"),
+    
     golem_add_external_resources(),
     navbarPage(title =  "Haida Gwaii Logging History", selected = 'Map',
                tabPanel(title = 'Map',

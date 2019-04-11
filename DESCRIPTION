@@ -10,7 +10,8 @@ Imports:
     shiny,
     golem,
     r2d3,
-    chroma
+    chroma,
+    shinyCustom
 Remotes: 
     Thinkr-open/golem
 RoxygenNote: 6.1.1

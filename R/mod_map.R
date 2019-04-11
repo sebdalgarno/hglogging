@@ -15,14 +15,18 @@
 #' @importFrom shiny NS tagList 
 mod_map_ui <- function(id){
   ns <- NS(id)
-  sidebarLayout(
-    sidebarPanel(width = 4, class = 'sidebar',
-                 sliderInput(ns("sliderYear"), label = "Select year",
-                             min = 1901, max = 2017, value = 1940)
-                 ),
-    mainPanel(width = 8,
-              r2d3::d3Output(ns("d3YearTotal"))
-              ))
+  fluidPage(
+    fluidRow(
+      column(12, align = "center",
+             shinyCustom::customSliderInput(ns("sliderYear"), label = "Select year", 
+                         width = "100%", timeFormat = "%Y",
+                         dragRange = TRUE, 
+                         min = as.Date("1901-01-01"), max = as.Date("2017-01-01"), 
+                         value = as.Date("1940-01-01")))),
+    fluidRow(
+      r2d3::d3Output(ns("d3YearTotal"))
+    )
+  )
 }
     
 # Module Server
@@ -37,11 +41,13 @@ mod_map_server <- function(input, output, session){
   filter_data <- reactive({
     req(input$sliderYear)
     x <- hglogging::year_totals
-    x[x$Year <= input$sliderYear,]
+    year <- dttr::dtt_year(input$sliderYear)
+    x[x$Year <= year,]
   })
   
   output$d3YearTotal <-  r2d3::renderD3({
     data <- filter_data() 
+    data$Year <- as.Date(paste0(data$Year, "-01-01"))
     r2d3::r2d3(
       data = data,
       script = system.file("app/js/yeartotal_barchart.js", package = "hglogging")
